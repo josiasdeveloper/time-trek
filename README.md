@@ -11,6 +11,10 @@ Time Trek is an interactive web application that connects people with historical
 
 ## 🛠️ Technical Stack
 
+- Backend:
+  - Python 3.8+
+  - FastAPI
+  - Uvicorn
 - API Integration:
   - Historical Events API
   - OpenAI's ChatGPT API
@@ -42,7 +46,8 @@ Example Response:
 
 ### Prerequisites
 
-- Node.js (Latest LTS version)
+- Python 3.8 or higher
+- pip (Python package manager)
 - API keys for:
   - Historical Events API
   - OpenAI API
@@ -56,13 +61,23 @@ git clone https://github.com/yourusername/time-trek.git
 cd time-trek
 ```
 
-2. Install dependencies
+2. Create and activate a virtual environment
 
 ```bash
-npm install
+python -m venv venv
+# On Windows
+.\venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
 ```
 
-3. Set up environment variables
+3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Set up environment variables
 
 ```bash
 # Create a .env file with your API keys
@@ -70,11 +85,15 @@ OPENAI_API_KEY=your_openai_api_key
 HISTORICAL_API_KEY=your_historical_api_key
 ```
 
-4. Start the application
+5. Start the application
 
 ```bash
-npm run dev
+uvicorn app.main:app --reload
 ```
+
+The API will be available at `http://localhost:8000`
+
+## 📚 Project Structure
 
 ## 🔒 Environment Variables
 
