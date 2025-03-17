@@ -112,4 +112,3 @@ This project is part of the Object-Oriented Programming course at Universidade F
 
 ---
 
-Made with 💻 for POO 2025.1
