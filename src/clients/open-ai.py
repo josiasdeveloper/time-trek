@@ -1,2 +1,2 @@
-class OpenAiClient:
+class OpenAiAsyncClient:
     pass
