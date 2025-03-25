@@ -1,2 +1,0 @@
-class OpenAiAsyncClient:
-    pass
