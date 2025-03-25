@@ -2,10 +2,10 @@
 
 from fastapi import FastAPI
 
-from src.clients.open_ai import OpenAIAsyncClient
+from src.clients.open_ai import openai_client
 
 app = FastAPI()
-openai_client = OpenAIAsyncClient()
+
 
 @app.get("/api/historical-facts")
 async def get_historical_facts(date: str):
@@ -20,3 +20,5 @@ async def get_historical_facts(date: str):
             }
         ]
     }
+    
+    
