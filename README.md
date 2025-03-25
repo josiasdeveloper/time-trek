@@ -91,7 +91,7 @@ HISTORICAL_API_KEY=your_historical_api_key
 uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+The API will be available at `http://localhost:9000`
 
 ## 📚 Project Structure
 

@@ -1,13 +1,13 @@
 
 
-from fastapi import FastAPI
+from fastapi import APIRouter
 
 from src.clients.open_ai import openai_client
 
-app = FastAPI()
+router = APIRouter()
 
 
-@app.get("/api/historical-facts")
+@router.get("/historical-facts")
 async def get_historical_facts(date: str):
     chatgpt_response = await openai_client.get_response("Hello World")
 
