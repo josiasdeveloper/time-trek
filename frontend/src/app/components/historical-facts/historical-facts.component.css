@@ -1,0 +1,257 @@
+.historical-facts-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  color: #333;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #646cff;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading p {
+  font-size: 1.2rem;
+  color: #646cff;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Error state */
+.error-container {
+  background-color: #fff5f5;
+  border-left: 4px solid #f56565;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.3s ease-out;
+}
+
+.error-container h3 {
+  color: #e53e3e;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.error-container button {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+}
+
+.error-container button:hover {
+  background-color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+/* Facts header */
+.facts-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 1rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.facts-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #1a202c;
+}
+
+.facts-header p {
+  color: #718096;
+  font-size: 1rem;
+}
+
+/* Facts list */
+.facts-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.fact-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: cardAppear 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.fact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.fact-card h3 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.fact-card p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.attachments {
+  background-color: #f7fafc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.attachments h4 {
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.attachments ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.attachments li {
+  margin-bottom: 0.5rem;
+}
+
+.attachments a {
+  color: #646cff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.attachments a:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+/* Metadata */
+.metadata {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eaeaea;
+  font-size: 0.875rem;
+  color: #718096;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.metadata p {
+  margin: 0.25rem 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Make the cards appear one after another */
+.fact-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.fact-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.fact-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.fact-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.fact-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.fact-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.fact-card:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.fact-card:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .facts-list {
+    grid-template-columns: 1fr;
+  }
+
+  .historical-facts-container {
+    padding: 1rem;
+  }
+}
+

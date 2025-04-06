@@ -1,0 +1,28 @@
+<div class="date-selector-container" [@fadeIn]>
+  <h2 class="date-selector-title">Explore Historical Events</h2>
+  
+  <div class="info-box">
+    <span class="material-icons info-icon">info</span>
+    <p>Enter your birth date or any significant date to discover fascinating historical events that occurred on that day. Explore events from 1900 to present day.</p>
+  </div>
+
+  <form [formGroup]="dateForm" (ngSubmit)="onSubmit()" class="date-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput [matDatepicker]="picker" formControlName="selectedDate" [min]="minDate" [max]="maxDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (dateForm.get('selectedDate')?.invalid) {
+        <mat-error>Please choose a valid date</mat-error>
+      }
+    </mat-form-field>
+    
+    <button 
+      mat-raised-button 
+      color="primary"
+      type="submit" 
+      class="submit-button" 
+      [disabled]="dateForm.invalid">
+      Discover Historical Events
+    </button>
+  </form>
+</div>
