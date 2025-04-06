@@ -1,6 +1,6 @@
 from src.clients.http_async_client import HttpAsyncClient
 from src.config import settings
-from src.data.api_ninja import HistoricalFact
+from src.data.api_ninja import HistoricalEvents
 
 
 class ApiNinjaAsyncClient:
@@ -12,17 +12,19 @@ class ApiNinjaAsyncClient:
 
     
     
-    async def get_historical_data(self, month: int, year: int) -> list[HistoricalFact]:
+    async def get_historical_data(self, month: int, year: int) -> HistoricalEvents:
         path = f"/historicalevents?year={year}&month={month}"
         response = await self.http_client.get(path)
         json_data = await response.json()
         
-        # Filter for data with all required fields
-        return [
-            HistoricalFact(**fact_data)
+        # Extract only the events from the response
+        events = [
+            fact_data["event"]
             for fact_data in json_data
             if all(key in fact_data for key in ["year", "month", "day", "event"])
         ]
+        
+        return HistoricalEvents(year=year, month=month, events=events)
             
 
         
