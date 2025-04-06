@@ -1,0 +1,68 @@
+.date-selector-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding-top: 0.5rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-bottom: 5rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.date-selector-title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.date-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  margin-top: 1rem;
+  background-color: #764ba2 !important;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #5a3c80 !important;
+}
+
+.submit-button:disabled {
+  background-color: #6c757d !important;
+  cursor: not-allowed;
+}
+
+.info-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #3f51b5;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.info-box p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.info-icon {
+  color: #3f51b5;
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+}

@@ -5,7 +5,9 @@ from typing import Dict, Optional
 import aiohttp
 import backoff
 from aiohttp import ClientResponse
+from logging import getLogger
 
+logger = getLogger(__name__)
 
 class HttpAsyncClient:
     def __init__(
@@ -32,6 +34,7 @@ class HttpAsyncClient:
 
     async def create_session(self):
         if not self._session:
+            logger.debug("Creating new HTTP session")
             if not self.verify_ssl:
                 # Create a custom SSL context that doesn't verify certificates
                 ssl_context = ssl.create_default_context()
@@ -67,14 +70,17 @@ class HttpAsyncClient:
             await self.create_session()
 
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
+        logger.debug(f"Making {method} request to {url}")
         response = None
         try:
             if not self._session:
                 raise RuntimeError("Session not created")
             response = await self._session.request(method, url, **kwargs)
             response.raise_for_status()
+            logger.debug(f"Successfully completed {method} request to {url}")
             return response
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error in {method} request to {url}: {str(e)}")
             raise
 
     async def get(self, endpoint: str, **kwargs) -> ClientResponse:

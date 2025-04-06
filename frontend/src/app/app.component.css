@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+main {
+  min-height: 100vh;
+  background: white;
+  padding: 2rem 1rem;
+  display: block;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.logo svg {
+  width: 40px;
+  height: 40px;
+}
+
+.logo h1 {
+  font-size: 2.5rem;
+  color: #5465e5;
+  margin: 0;
+  font-weight: 700;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: white;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+  width: 100%;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+header p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  margin-top: 1rem;
+}
+
+.clock-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: transform 0.3s ease;
+}
+
+.clock-icon:hover {
+  transform: rotate(15deg);
+}
+
+@keyframes fadeInRotate {
+  from {
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}

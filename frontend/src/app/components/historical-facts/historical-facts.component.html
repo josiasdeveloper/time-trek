@@ -1,0 +1,53 @@
+<div class="historical-facts-container">
+  @if (loading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Traveling through time...</p>
+    </div>
+  }
+  
+  @if (error) {
+    <div class="error-container">
+      <h3>Oops! Time travel failed</h3>
+      <p>{{ error }}</p>
+      <button (click)="fetchHistoricalFacts()">Try Again</button>
+    </div>
+  }
+  
+  @if (factsResponse) {
+    <div class="facts-header">
+      <h2>Historical Events from {{ factsResponse.date }}</h2>
+      <p>Found {{ factsResponse.total_facts }} events from this time period</p>
+    </div>
+    
+    <div class="facts-list">
+      @for (fact of factsResponse.historical_facts; track fact.title) {
+        <div class="fact-card">
+          <h3>{{ fact.title }}</h3>
+          <p>{{ fact.content }}</p>
+          
+          @if (fact.attachments && fact.attachments.length > 0) {
+            <div class="attachments">
+              <h4>Sources:</h4>
+              <ul>
+                @for (attachment of fact.attachments; track attachment) {
+                  <li>
+                    <a href="{{ attachment }}" target="_blank" rel="noopener noreferrer">
+                      {{ attachment.split('/')[2] }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    
+    <div class="metadata">
+      <p>Source: {{ factsResponse.metadata.source }}</p>
+      <p>Enhanced by: {{ factsResponse.metadata.enhanced_by }}</p>
+    </div>
+  }
+</div>
+
