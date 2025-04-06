@@ -57,8 +57,10 @@ Example Response:
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/time-trek.git
+git clone https://github.com/josiasdev/time-trek
+.git
 cd time-trek
+
 ```
 
 2. Create and activate a virtual environment
