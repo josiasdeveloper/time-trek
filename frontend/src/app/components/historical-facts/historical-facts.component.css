@@ -1,7 +1,12 @@
 .historical-facts-container {
-  max-width: 1200px;
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjusted height to make room for footer */
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   color: #333;
 }
@@ -12,16 +17,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
-  padding: 2rem;
+  height: 100%;
+  padding: 0;
 }
 
 .spinner {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: 3px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
-  border-top-color: #646cff;
+  border-top-color: #667eea;
   animation: spin 1s ease-in-out infinite;
   margin-bottom: 1rem;
 }
@@ -33,8 +38,8 @@
 }
 
 .loading p {
-  font-size: 1.2rem;
-  color: #646cff;
+  font-size: 1rem;
+  color: #667eea;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -53,22 +58,28 @@
 /* Error state */
 .error-container {
   background-color: #fff5f5;
-  border-left: 4px solid #f56565;
+  border-left: 4px solid #667eea;
   border-radius: 8px;
-  padding: 1.5rem;
-  margin: 2rem 0;
+  padding: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  animation: slideIn 0.3s ease-out;
 }
 
 .error-container h3 {
-  color: #e53e3e;
+  color: #667eea;
   margin-top: 0;
   margin-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .error-container button {
-  background-color: #646cff;
+  background-color: #667eea;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -80,168 +91,223 @@
 }
 
 .error-container button:hover {
-  background-color: #4f46e5;
-  transform: translateY(-1px);
+  background-color: #5a67d8;
 }
 
 /* Facts header */
 .facts-header {
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #eaeaea;
-  padding-bottom: 1rem;
-  animation: fadeIn 0.5s ease-out;
+  flex-shrink: 0;
 }
 
 .facts-header h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
   color: #1a202c;
+  font-weight: 500;
 }
 
 .facts-header p {
-  color: #718096;
-  font-size: 1rem;
+  color: #667eea;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
-/* Facts list */
-.facts-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+/* Horizontal scrollable container */
+.facts-scroll-container {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 100px); /* Ensure everything fits */
+  min-height: 0; /* Needed for flex container to respect max-height */
+}
+
+.facts-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none;  /* Hide scrollbar in Firefox */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  height: calc(100% - 80px); /* Increased space for scroll indicator and footer */
+  flex: 1;
+}
+
+.facts-carousel::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Chrome/Safari/Opera */
 }
 
 .fact-card {
+  flex: 0 0 auto;
+  width: 380px;
+  height: 440px;
   background-color: white;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: cardAppear 0.5s ease-out;
-  animation-fill-mode: both;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
 }
 
-.fact-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .fact-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   color: #2d3748;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 0.5rem;
+  font-weight: 500;
+  padding-right: 2.5rem; /* Make room for favicons */
+}
+
+.fact-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-bottom: 0;
+}
+
+.fact-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.fact-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.fact-content::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
 }
 
 .fact-card p {
   color: #4a5568;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .attachments {
   background-color: #f7fafc;
   border-radius: 8px;
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 0.75rem;
+  margin-top: auto;
+  font-size: 0.8rem;
 }
 
 .attachments h4 {
-  font-size: 0.9rem;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem 0;
   color: #4a5568;
+  font-size: 0.85rem;
 }
 
-.attachments ul {
-  margin: 0;
-  padding-left: 1.5rem;
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.attachments li {
-  margin-bottom: 0.5rem;
-}
-
-.attachments a {
-  color: #646cff;
+.source-link {
+  color: #667eea;
   text-decoration: none;
-  transition: color 0.2s ease;
+  font-size: 0.8rem;
+  background-color: #edf2f7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
-.attachments a:hover {
-  color: #4f46e5;
-  text-decoration: underline;
+.source-link:hover {
+  background-color: #e2e8f0;
+  color: #5a67d8;
+  text-decoration: none;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  text-align: center;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+  min-height: 60px; /* Ensure minimum height */
+}
+
+.scroll-line {
+  height: 4px; /* Slightly smaller line */
+  background-color: #eaeaea;
+  border-radius: 2px;
+  margin: 0 auto 0.5rem;
+  position: relative;
+  width: 60%;
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #667eea;
+  border-radius: 2px;
+  width: 20%; /* Will be updated with JS */
+  transition: width 0.3s ease;
+}
+
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #667eea;
+  font-size: 0.8rem; /* Smaller text */
+}
+
+.scroll-hint mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  color: #667eea;
 }
 
 /* Metadata */
 .metadata {
-  margin-top: 3rem;
-  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem; /* Add bottom padding */
   border-top: 1px solid #eaeaea;
-  font-size: 0.875rem;
-  color: #718096;
-  animation: fadeIn 0.5s ease-out;
+  font-size: 0.75rem;
+  color: #667eea;
+  text-align: center;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  min-height: 20px; /* Ensure minimum height */
+  width: 100%;
 }
 
-.metadata p {
-  margin: 0.25rem 0;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes cardAppear {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Make the cards appear one after another */
-.fact-card:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.fact-card:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.fact-card:nth-child(3) {
-  animation-delay: 0.3s;
-}
-.fact-card:nth-child(4) {
-  animation-delay: 0.4s;
-}
-.fact-card:nth-child(5) {
-  animation-delay: 0.5s;
-}
-.fact-card:nth-child(6) {
-  animation-delay: 0.6s;
-}
-.fact-card:nth-child(7) {
-  animation-delay: 0.7s;
-}
-.fact-card:nth-child(8) {
-  animation-delay: 0.8s;
+.dot-separator {
+  font-size: 0.8rem;
+  color: #667eea;
 }
 
 /* Responsive adjustments */
@@ -253,5 +319,39 @@
   .historical-facts-container {
     padding: 1rem;
   }
+}
+
+.sources-section, .sources-label {
+  display: none;
+}
+
+.favicon-container {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.favicon-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.favicon-link:hover {
+  transform: scale(1.3);
+}
+
+.favicon-image {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 

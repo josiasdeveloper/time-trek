@@ -1,9 +1,12 @@
+from logging import getLogger
+
 from openai import AsyncOpenAI
 
 from src.config import settings
 from src.data.api_ninja import HistoricalEvents
 from src.data.open_ai import HistoricalFactResponse
 
+logger = getLogger(__name__)
 
 class OpenAIAsyncClient:
     def __init__(self):
@@ -11,15 +14,16 @@ class OpenAIAsyncClient:
         
     async def get_historical_fact(
         self, 
-        month: int, 
-        year: int, 
-        historical_events: HistoricalEvents, 
+        historical_events: HistoricalEvents,
         page_size: int = settings.batch_size
     ) -> list[HistoricalFactResponse]:
+        logger.info(f"Processing historical events for {historical_events.year}-{historical_events.month}-{historical_events.day}")
         paginated_events = historical_events.paginate_events(page_size)
+        logger.debug(f"Split events into {len(paginated_events)} batches of size {page_size}")
         responses = []
         
-        for event_batch in paginated_events:
+        for i, event_batch in enumerate(paginated_events, 1):
+            logger.debug(f"Processing batch {i} of {len(paginated_events)}")
             message = """
             You are a knowledgeable historical research assistant. Analyze these historical events and provide detailed context.
 
@@ -36,17 +40,17 @@ class OpenAIAsyncClient:
                {{
                  "month": {month},
                  "year": {year},
-                 "day": 1,
+                 "day": {day},
                  "facts": [
                    {{
                      "title": "The original historical fact",
                      "content": "Detailed explanation in Brazilian Portuguese - If there are any URLs, they will be in the attachments field. Avoid them here",
-                     "attachments": null  // Use real URLs only, otherwise null
+                     "attachments": null  // Use real URLs only, otherwise null. I'm using json to parse the response so this need to be a json array inside []
                    }}
                  ]
                }}
 
-            Time period: Month: {month}, Year: {year}
+            Time period: Month: {month}, Year: {year}, Day: {day}
             Historical facts to analyze: {historical_facts}
 
             Important:
@@ -57,30 +61,36 @@ class OpenAIAsyncClient:
             - Only include URLs you are 100% certain exist and are relevant
             - If you don't have a verified source URL, use null for attachments
             - Ensure JSON format is exactly as specified
-            """.format(month=month, year=year, historical_facts=event_batch)
+            """.format(month=historical_events.month, year=historical_events.year, day=historical_events.day, historical_facts=event_batch)
             
             response = await self._get_response(message)
             try:
-                parsed_response = HistoricalFactResponse.model_validate_json(response)
+                parsed_response : HistoricalFactResponse = HistoricalFactResponse.model_validate_json(response)
                 responses.append(parsed_response)
-            except Exception as e:
-                print(f"Failed to parse GPT response: {e}")
+                logger.debug(f"Successfully processed batch {i}")
+            except Exception as error:
+                logger.error(f"Failed to parse GPT response in batch {i}: {str(error)}")
                 responses.append(response)
         
+        logger.info(f"Completed processing all {len(responses)} response batches")
         return responses
 
     async def _get_response(self, message: str) -> str:
-        response = await self.client.chat.completions.create(
-            model="gpt-4o-search-preview",
-            messages=[
-                {"role": "user", "content": message}
-            ]
-        )
-        # Clean up the response by removing markdown code blocks
-        content = response.choices[0].message.content or ""
-        content = content.replace("```json", "").replace("```", "").strip()
-        print(response)
-        return content
+        logger.debug("Sending request to OpenAI API")
+        try:
+            response = await self.client.chat.completions.create(
+                model="gpt-4o-search-preview-2025-03-11",
+                messages=[
+                    {"role": "user", "content": message}
+                ]
+            )
+            content = response.choices[0].message.content or ""
+            content = content.replace("```json", "").replace("```", "").strip()
+            logger.debug("Successfully received and cleaned OpenAI response")
+            return content
+        except Exception as e:
+            logger.error(f"Error getting OpenAI response: {str(e)}")
+            raise
     
     
 openai_client = OpenAIAsyncClient() # export singleton instance

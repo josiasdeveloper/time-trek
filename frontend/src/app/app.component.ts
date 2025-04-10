@@ -1,31 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { HistoricalFactsComponent } from './components/historical-facts/historical-facts.component';
-import { CommonModule, NgIf } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    NgIf,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatNativeDateModule,
-    DateSelectorComponent,
-    HistoricalFactsComponent
-  ],
+  imports: [CommonModule, DateSelectorComponent, HistoricalFactsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [
@@ -38,10 +20,26 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ]
 })
 export class AppComponent {
-  selectedDate: {day: number, month: number, year: number} | null = null;
+  selectedDate: { day: number; month: number; year: number } | null = null;
+  showingEvents = false;
 
-  onDateSelected(date: {day: number, month: number, year: number}) {
-    console.log('Date selected:', date);
-    this.selectedDate = date;
+  onDateSelected(date: { day: number; month: number; year: number }) {
+    // If we already have a date and are just navigating back to select a new one,
+    // clear it first so the component will properly re-fetch when we set it again
+    if (this.selectedDate) {
+      this.selectedDate = null;
+      // Small delay to ensure the component registers the change
+      setTimeout(() => {
+        this.selectedDate = date;
+        this.showingEvents = true;
+      }, 50);
+    } else {
+      this.selectedDate = date;
+      this.showingEvents = true;
+    }
+  }
+  
+  goBackToDateSelection() {
+    this.showingEvents = false;
   }
 }

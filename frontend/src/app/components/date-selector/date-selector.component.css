@@ -11,7 +11,7 @@
 }
 
 .date-selector-title {
-  color: #333;
+  color: #667eea;
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
@@ -29,22 +29,23 @@
 
 .submit-button {
   margin-top: 1rem;
-  background-color: #764ba2 !important;
-  color: white;
+  background-color: #667eea !important;
+  color: white !important;
 }
 
 .submit-button:hover {
-  background-color: #5a3c80 !important;
+  background-color: #5a67d8 !important;
 }
 
 .submit-button:disabled {
-  background-color: #6c757d !important;
+  background-color: #cccccc !important;
   cursor: not-allowed;
+  color: #888888 !important;
 }
 
 .info-box {
   background-color: #f8f9fa;
-  border-left: 4px solid #3f51b5;
+  border-left: 4px solid #667eea;
   padding: 1rem;
   margin-bottom: 2rem;
   border-radius: 4px;
@@ -55,13 +56,13 @@
 
 .info-box p {
   margin: 0;
-  color: #666;
+  color: #667eea;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .info-icon {
-  color: #3f51b5;
+  color: #667eea;
   font-size: 20px;
   height: 20px;
   width: 20px;

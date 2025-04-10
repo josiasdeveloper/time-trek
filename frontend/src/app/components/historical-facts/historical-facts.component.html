@@ -20,33 +20,49 @@
       <p>Found {{ factsResponse.total_facts }} events from this time period</p>
     </div>
     
-    <div class="facts-list">
-      @for (fact of factsResponse.historical_facts; track fact.title) {
-        <div class="fact-card">
-          <h3>{{ fact.title }}</h3>
-          <p>{{ fact.content }}</p>
-          
-          @if (fact.attachments && fact.attachments.length > 0) {
-            <div class="attachments">
-              <h4>Sources:</h4>
-              <ul>
-                @for (attachment of fact.attachments; track attachment) {
-                  <li>
-                    <a href="{{ attachment }}" target="_blank" rel="noopener noreferrer">
-                      {{ attachment.split('/')[2] }}
-                    </a>
-                  </li>
-                }
-              </ul>
+    <!-- Scrollable cards container -->
+    <div class="facts-scroll-container">
+      <div class="facts-carousel" #carousel>
+        @for (fact of factsResponse.historical_facts; track fact.title) {
+          <div class="fact-card">
+            <!-- Card content with consistent title positioning -->
+            <div class="card-content">
+              <h3>{{ fact.title }}</h3>
+              <div class="fact-content">
+                <p>{{ fact.content }}</p>
+              </div>
             </div>
-          }
+            
+            <!-- Favicon circles at the top edge -->
+            @if (fact.attachments && fact.attachments.length > 0) {
+              <div class="favicon-container">
+                @for (attachment of fact.attachments; track attachment) {
+                  <a href="{{ attachment }}" target="_blank" rel="noopener noreferrer" class="favicon-link" title="{{ getDomainName(attachment) }}">
+                    <img src="https://www.google.com/s2/favicons?domain={{ getDomainName(attachment) }}&sz=32" alt="{{ getDomainName(attachment) }}" class="favicon-image">
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+      
+      <!-- Scroll indicators -->
+      <div class="scroll-indicator">
+        <div class="scroll-line">
+          <div class="scroll-progress" #progressBar></div>
         </div>
-      }
+        <div class="scroll-hint">
+          <mat-icon>swipe</mat-icon>
+          <span>Swipe to explore</span>
+          <mat-icon>double_arrow</mat-icon>
+        </div>
+      </div>
     </div>
     
+    <!-- Metadata footer -->
     <div class="metadata">
-      <p>Source: {{ factsResponse.metadata.source }}</p>
-      <p>Enhanced by: {{ factsResponse.metadata.enhanced_by }}</p>
+      <span>Source: {{ factsResponse.metadata.source }}</span>
     </div>
   }
 </div>
